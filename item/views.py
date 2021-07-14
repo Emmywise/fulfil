@@ -6,6 +6,7 @@ from .models import *
 from .forms import*
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -45,8 +46,10 @@ def register_product(request):
     if request.method == 'POST':  # making sure its a post request
         form = ProductForm(request.POST)
         if form.is_valid():  # check if data is valid
-            form.save()  # save the data collect
+           form.save # save the data collect
+         
         return HttpResponseRedirect(reverse("view-product"))  # redirect to next page after saving file
+        # return HttpResponseRedirect(instance.get_absolute_url()) 
     else:
         form = ProductForm
     return render(request, 'item/register-product.html', {'form': form})
@@ -58,16 +61,53 @@ def delete_product(request, pk):
     return redirect('view-product')
 
 # update view for details
+
 def update_view(request, pk = None):
     instance = get_object_or_404(Products, pk= pk)
     form = ProductForm(request.POST or None, instance = instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
-        return HttpResponseRedirect(instance.get_absolute_url()) 
+        return redirect("view-product")
     context = {
         "instance": instance,
         "form": form
     }
+    return render(request, "item/update-product.html", context)
 
-    return render(request, "register-product.html", context)
+# def update_view(request, pk=None ):
+#     # instance = get_object_or_404(Products, pk= pk)
+#     products = Products.objects.get(pk=pk)
+#     form = ProductForm(request.POST or None, instance = products)
+#     if form.is_valid():
+#         form.save(commit=False)
+    
+#         return redirect("view-product") 
+#     context = {
+#         # "product": instance.product_name,
+#         "instance": products,
+#         "form": form
+#     }
+
+#     return render(request, "item/update-product.html", context)
+
+# class SearchResultsView(ListView):
+#     model = City
+#     template_name = 'search_results.html'
+
+#     def get_queryset(self): # new
+#         query = self.request.GET.get('q')
+#         object_list = City.objects.filter(
+#             Q(name__icontains=query) | Q(state__icontains=query)
+#         )
+#         return object_list
+
+def search_product(request):
+    query = request.GET.get('q', '')
+    if query :
+        products = Products.objects.filter(
+            Q(product_name__icontains=query) | Q(product_alert__icontains=query)
+        )
+    else:
+        products = Products.objects.filter().order_by('-id')[:10]  # filter inputed data by id
+    return render(request, 'item/view-product.html', {"products": products})
