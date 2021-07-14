@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+# Product model
 class Products(models.Model):
     product_name = models.CharField(max_length=100)
     product_alert = models.CharField(max_length=100)

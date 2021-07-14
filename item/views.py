@@ -54,21 +54,21 @@ def register_product(request):
         form = ProductForm
     return render(request, 'item/register-product.html', {'form': form})
 
-
+ #delete product by ID
 def delete_product(request, pk):
     if request.method == "POST":
         products = Products.objects.get(pk=pk)
         products.delete()
     return redirect('view-product') 
 
-def delete_all_product(request):
+# function to delete all product
+def delete_all_product(request): 
     products = Products.objects.all()
     products.delete()
     return redirect('view-product') 
 
-# update view for details
-
-def update_view(request, pk = None):
+# update view for product
+def update_view(request, pk = None): 
     instance = get_object_or_404(Products, pk= pk)
     form = ProductForm(request.POST or None, instance = instance)
     if form.is_valid():
@@ -81,7 +81,7 @@ def update_view(request, pk = None):
     }
     return render(request, "item/update-product.html", context)
 
-
+# search product function
 def search_product(request):
     query = request.GET.get('q', '')
     if query :
