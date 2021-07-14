@@ -16,12 +16,14 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
+                                      
                                         <tr>
                                             
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Product Alert</th>
                                             <th>Date</th>
+                                            <th>Update</th>
                                             <th>Delete</th>
                                             
                                         </tr>
@@ -33,9 +35,11 @@
                                             <th>Quantity</th>
                                             <th>Product Alert</th>
                                             <th>Date</th>
+                                            <th>Update</th>
                                             <th>Delete</th>
                                             
                                         </tr>
+                                        
                                     </tfoot>
                                     <tbody>
                                         {% for product in products %} 
@@ -46,21 +50,27 @@
                                             <td>{{product.product_alert}}</td>
                                             <td>{{product.date_created}}</td>
                                             <td>
-                                                <form method="POST" action="{% url 'delete_product' product.pk %}">
-                                                    {%csrf_token%}
-                                                    <button type="submit" class="btn btn-danger">delete</button>
-                                                </form> 
-                                            </td> 
-                                            <td>
                                                 <form method="POST" action="{% url 'update-product' product.pk %}">
                                                     {%csrf_token%}
                                                     <button type="submit" class="btn btn-primary">update</button>
                                                 </form> 
                                             </td> 
+                                            <td>
+                                                <form method="POST" action="{% url 'delete_product' product.pk %}">
+                                                    {%csrf_token%}
+                                                    <button type="submit" class="btn btn-danger">delete</button>
+                                                </form> 
+                                            </td> 
+                                           
                                         </tr>
                                         {%endfor product%}
                                     </tbody>
+                                    
                                 </table>
+                                <div class="form-group" style="margin-top: 20px">
+                                           
+                                    <a href="{% url 'delete-all-product' %}" class="btn btn-danger" type="submit">Delete All</a>
+                                  </div>
                             </div>
                         </div>
                     </div>

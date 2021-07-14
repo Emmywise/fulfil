@@ -17,6 +17,7 @@ def home(request):
 
 def upload_product(request): #fucntion that fetch the datas from haflhour consumption csv file to the datbase
     template = "item/upload-product.html"
+    # temp = "item/upload-product.html"
     if request.method =="GET":
         return render(request, template)
     
@@ -35,6 +36,7 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
           
         )
     context = {}
+
     return render(request, template, context)
 
 def product(request):
@@ -46,19 +48,23 @@ def register_product(request):
     if request.method == 'POST':  # making sure its a post request
         form = ProductForm(request.POST)
         if form.is_valid():  # check if data is valid
-           form.save # save the data collect
-         
+            form.save()  # save the data collect
         return HttpResponseRedirect(reverse("view-product"))  # redirect to next page after saving file
-        # return HttpResponseRedirect(instance.get_absolute_url()) 
     else:
         form = ProductForm
     return render(request, 'item/register-product.html', {'form': form})
 
+
 def delete_product(request, pk):
     if request.method == "POST":
-        documents = Products.objects.get(pk=pk)
-        documents.delete()
-    return redirect('view-product')
+        products = Products.objects.get(pk=pk)
+        products.delete()
+    return redirect('view-product') 
+
+def delete_all_product(request):
+    products = Products.objects.all()
+    products.delete()
+    return redirect('view-product') 
 
 # update view for details
 
@@ -75,32 +81,6 @@ def update_view(request, pk = None):
     }
     return render(request, "item/update-product.html", context)
 
-# def update_view(request, pk=None ):
-#     # instance = get_object_or_404(Products, pk= pk)
-#     products = Products.objects.get(pk=pk)
-#     form = ProductForm(request.POST or None, instance = products)
-#     if form.is_valid():
-#         form.save(commit=False)
-    
-#         return redirect("view-product") 
-#     context = {
-#         # "product": instance.product_name,
-#         "instance": products,
-#         "form": form
-#     }
-
-#     return render(request, "item/update-product.html", context)
-
-# class SearchResultsView(ListView):
-#     model = City
-#     template_name = 'search_results.html'
-
-#     def get_queryset(self): # new
-#         query = self.request.GET.get('q')
-#         object_list = City.objects.filter(
-#             Q(name__icontains=query) | Q(state__icontains=query)
-#         )
-#         return object_list
 
 def search_product(request):
     query = request.GET.get('q', '')
