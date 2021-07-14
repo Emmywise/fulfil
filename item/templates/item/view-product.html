@@ -50,10 +50,10 @@
                                             <td>{{product.product_alert}}</td>
                                             <td>{{product.date_created}}</td>
                                             <td>
-                                                <form method="POST" action="{% url 'update-product' product.pk %}">
-                                                    {%csrf_token%}
+                                                <a  href="{% url 'update-product' product.pk %}">
+                                                  
                                                     <button type="submit" class="btn btn-primary">update</button>
-                                                </form> 
+                                                </a> 
                                             </td> 
                                             <td>
                                                 <form method="POST" action="{% url 'delete_product' product.pk %}">

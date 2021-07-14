@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import os
 import csv, io
@@ -24,7 +25,7 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
     # import pdb;pdb.set_trace()
     csv_file = request.FILES['file'] #get the file
     if not csv_file.name.endswith('.csv'): #check user upload only csv file format is allowed
-        messages.error(request, 'This is not a csv file, upload a csv file')
+       HttpResponse('This is not a csv file, upload a csv file')
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set) #loop through data to be string
     next(io_string) #skip the first line which is the header
@@ -37,7 +38,7 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
         )
     context = {}
 
-    return render(request, template, context)
+    return HttpResponseRedirect(reverse("view-product"))
 
 def product(request):
     products = Products.objects.filter().order_by('-id')[:10]  # filter inputed data by id
@@ -71,6 +72,8 @@ def delete_all_product(request):
 def update_view(request, pk = None): 
     instance = get_object_or_404(Products, pk= pk)
     form = ProductForm(request.POST or None, instance = instance)
+    # import pdb; pdb.set_trace()
+
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
