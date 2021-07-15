@@ -42,10 +42,10 @@
                         {{ form.quantity.errors }}
                         
                     </small>
-                      <label>Description:</label>
+                      <label>Product Alert:</label>
                       <div class="input-group mb-1">
                         <div class="input-group-prepend">
-                            {% render_field form.description class="form-control" placeholder="" %}
+                            {% render_field form.product_alert class="form-control" placeholder="" %}
                         </div>
                           {% render_field form.vendor_primary_person class="form-control" placeholder="" %}
                       </div>
@@ -56,8 +56,8 @@
                     <small class="text-danger">
                         {{ form.date_created.errors }}
                     </small>
-                      <label>Product alert</label>
-                    {% render_field form.product_alert class="form-control" placeholder="" %}
+                      <label>Description</label>
+                    {% render_field form.description class="form-control" placeholder="" %}
                   </div>
                 </div>
                 
