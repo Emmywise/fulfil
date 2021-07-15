@@ -4,9 +4,9 @@ from django.db import models
 
 # Product model
 class Products(models.Model):
-    product_name = models.CharField(max_length=100)
-    product_alert = models.CharField(max_length=100)
-    quantity = models.PositiveIntegerField( null=True, blank=True)
+    product_name = models.CharField(max_length=225)
+    product_alert = models.CharField(max_length=225)
+    description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

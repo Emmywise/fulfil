@@ -18,14 +18,14 @@ def home(request):
 
 def upload_product(request): #fucntion that fetch the datas from haflhour consumption csv file to the datbase
     template = "item/upload-product.html"
-    # temp = "item/upload-product.html"
+   
     if request.method =="GET":
         return render(request, template)
     
-    # import pdb;pdb.set_trace()
+    
     csv_file = request.FILES['file'] #get the file
     if not csv_file.name.endswith('.csv'): #check user upload only csv file format is allowed
-       HttpResponse('This is not a csv file, upload a csv file')
+       return HttpResponse('This is not a csv file, upload a csv file')
     data_set = csv_file.read().decode('UTF-8')
     io_string = io.StringIO(data_set) #loop through data to be string
     next(io_string) #skip the first line which is the header
@@ -33,7 +33,7 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
         _, created = Products.objects.update_or_create(
             product_name=colum[0],
             product_alert=colum[1],
-            quantity=colum[2],
+            description=colum[2],
           
         )
     context = {}
