@@ -20,7 +20,7 @@
                                         <tr>
                                             
                                             <th>Product Name</th>
-                                            <th>Quantity</th>
+                                            <th>Description</th>
                                             <th>Product Alert</th>
                                             <th>Date</th>
                                             <th>Update</th>
@@ -32,7 +32,7 @@
                                         <tr>
                                             
                                             <th>Product Name</th>
-                                            <th>Quantity</th>
+                                            <th>Description</th>
                                             <th>Product Alert</th>
                                             <th>Date</th>
                                             <th>Update</th>
@@ -46,8 +46,8 @@
                                         <tr>
                                             
                                             <td>{{product.product_name}}</td>
-                                            <td>{{product.quantity}}</td>
                                             <td>{{product.product_alert}}</td>
+                                            <td>{{product.description}}</td>
                                             <td>{{product.date_created}}</td>
                                             <td>
                                                 <a  href="{% url 'update-product' product.pk %}">
