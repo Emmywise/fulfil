@@ -1,4 +1,4 @@
-from item.tasks import upload_function
+# from item.tasks import upload_function
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import os
