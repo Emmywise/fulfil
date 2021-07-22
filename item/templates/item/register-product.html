@@ -32,8 +32,8 @@
                     <small class="text-danger">
                         {{ form.product_name.errors }}
                     </small>
-                      <label>Product Name:</label>
-                    {% render_field form.product_name class="form-control" placeholder="" %}
+                      <label>Name:</label>
+                    {% render_field form.name class="form-control" placeholder="" %}
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -42,10 +42,10 @@
                         {{ form.quantity.errors }}
                         
                     </small>
-                      <label>Product Alert:</label>
+                      <label>SKU:</label>
                       <div class="input-group mb-1">
                         <div class="input-group-prepend">
-                            {% render_field form.product_alert class="form-control" placeholder="" %}
+                            {% render_field form.sku class="form-control" placeholder="" %}
                         </div>
                           {% render_field form.vendor_primary_person class="form-control" placeholder="" %}
                       </div>

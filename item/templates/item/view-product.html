@@ -19,9 +19,9 @@
                                       
                                         <tr>
                                             
-                                            <th>Product Name</th>
-                                            <th>Description</th>
-                                            <th>Product Alert</th>
+                                            <th>Name</th>
+                                            <th>SKU</th>
+                                            <th>Description</th>                                          
                                             <th>Date</th>
                                             <th>Update</th>
                                             <th>Delete</th>
@@ -31,9 +31,9 @@
                                     <tfoot>
                                         <tr>
                                             
-                                            <th>Product Name</th>
+                                            <th>Name</th>
+                                            <th>SKU</th>
                                             <th>Description</th>
-                                            <th>Product Alert</th>
                                             <th>Date</th>
                                             <th>Update</th>
                                             <th>Delete</th>
@@ -45,8 +45,8 @@
                                         {% for product in products %} 
                                         <tr>
                                             
-                                            <td>{{product.product_name}}</td>
-                                            <td>{{product.product_alert}}</td>
+                                            <td>{{product.name}}</td>
+                                            <td>{{product.sku}}</td>
                                             <td>{{product.description}}</td>
                                             <td>{{product.date_created}}</td>
                                             <td>
@@ -65,7 +65,16 @@
                                         </tr>
                                         {%endfor product%}
                                     </tbody>
+                                    <div>
+                                      
+                                        <p><a href="{% url 'register-product' %}" class="btn btn-primary">Add Product Manually</a></p>                           
+                                   
+
                                     
+                                    
+                                        <p><a href="{% url 'upload-product' %}" class="btn btn-primary" align="left">Upload Product File</a></p>                           
+                                    
+                                    </div>
                                 </table>
                                 <div class="form-group" style="margin-top: 20px">
                                            

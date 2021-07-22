@@ -1,3 +1,4 @@
+from item.tasks import upload_function
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 import os
@@ -8,12 +9,28 @@ from .forms import*
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db.models import Q
+# from .tasks import *
 
 # Create your views here.
 
 
 def home(request):
     return render(request, 'item/index.html') #rendering index page as home
+
+
+# def upload_product(request):
+#     if request.method =="GET":
+#         return render(request, "item/upload-product.html")
+    
+#     print("bfr csv")
+#     csv_file = request.FILES['file'] #get the file
+#     if not csv_file.name.endswith('.csv'): #check user upload only csv file format is allowed
+#        return HttpResponse('This is not a csv file, upload a csv file')
+#     print ("before")
+#     upload_function.delay(csv_file)
+#     print("after")
+#     return HttpResponseRedirect(reverse("view-product"))
+
 
 
 def upload_product(request): #fucntion that fetch the datas from haflhour consumption csv file to the datbase
@@ -31,8 +48,8 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
     next(io_string) #skip the first line which is the header
     for colum in csv.reader(io_string, delimiter=',', quotechar="|"):
         _, created = Products.objects.update_or_create(
-            product_name=colum[0],
-            product_alert=colum[1],
+            name=colum[0],
+            sku=colum[1],
             description=colum[2],
           
         )
@@ -41,7 +58,7 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
     return HttpResponseRedirect(reverse("view-product"))
 
 def product(request):
-    products = Products.objects.filter().order_by('-id')[:10]  # filter inputed data by id
+    products = Products.objects.filter().order_by('-id')  # filter inputed data by id
     return render(request, 'item/view-product.html', {"products": products})
 
 
@@ -89,7 +106,7 @@ def search_product(request):
     query = request.GET.get('q', '')
     if query :
         products = Products.objects.filter(
-            Q(product_name__icontains=query) | Q(product_alert__icontains=query)
+            Q(name__icontains=query) | Q(sku__icontains=query)
         )
     else:
         products = Products.objects.filter().order_by('-id')[:10]  # filter inputed data by id
