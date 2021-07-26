@@ -1,36 +1,16 @@
 # from item.tasks import upload_function
+import csv, io, os
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-import os
-import csv, io
-from django.contrib import messages
-from .models import *
-from .forms import*
-from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.db.models import Q
-# from .tasks import *
-
-# Create your views here.
+from .forms import ProductForm
+from .models import Products
 
 
 def home(request):
-    return render(request, 'item/index.html') #rendering index page as home
-
-
-# def upload_product(request):
-#     if request.method =="GET":
-#         return render(request, "item/upload-product.html")
-    
-#     print("bfr csv")
-#     csv_file = request.FILES['file'] #get the file
-#     if not csv_file.name.endswith('.csv'): #check user upload only csv file format is allowed
-#        return HttpResponse('This is not a csv file, upload a csv file')
-#     print ("before")
-#     upload_function.delay(csv_file)
-#     print("after")
-#     return HttpResponseRedirect(reverse("view-product"))
-
+    return render(request, 'item/index.html')
 
 
 def upload_product(request): #fucntion that fetch the datas from haflhour consumption csv file to the datbase
@@ -47,15 +27,16 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
     io_string = io.StringIO(data_set) #loop through data to be string
     next(io_string) #skip the first line which is the header
     for colum in csv.reader(io_string, delimiter=',', quotechar="|"):
-        _, created = Products.objects.update_or_create(
+        Products.objects.update_or_create(
             name=colum[0],
             sku=colum[1],
             description=colum[2],
           
         )
-    context = {}
+    
 
     return HttpResponseRedirect(reverse("view-product"))
+
 
 def product(request):
     products = Products.objects.filter().order_by('-id')  # filter inputed data by id
@@ -63,14 +44,15 @@ def product(request):
 
 
 def register_product(request):
-    if request.method == 'POST':  # making sure its a post request
+    if request.method == 'POST':  
         form = ProductForm(request.POST)
-        if form.is_valid():  # check if data is valid
-            form.save()  # save the data collect
-        return HttpResponseRedirect(reverse("view-product"))  # redirect to next page after saving file
+        if form.is_valid():  
+            form.save()  
+        return HttpResponseRedirect(reverse("view-product"))  
     else:
         form = ProductForm
     return render(request, 'item/register-product.html', {'form': form})
+
 
  #delete product by ID
 def delete_product(request, pk):
@@ -79,17 +61,18 @@ def delete_product(request, pk):
         products.delete()
     return redirect('view-product') 
 
+
 # function to delete all product
 def delete_all_product(request): 
     products = Products.objects.all()
     products.delete()
     return redirect('view-product') 
 
+
 # update view for product
 def update_view(request, pk = None): 
     instance = get_object_or_404(Products, pk= pk)
     form = ProductForm(request.POST or None, instance = instance)
-    # import pdb; pdb.set_trace()
 
     if form.is_valid():
         instance = form.save(commit=False)
@@ -100,6 +83,7 @@ def update_view(request, pk = None):
         "form": form
     }
     return render(request, "item/update-product.html", context)
+
 
 # search product function
 def search_product(request):

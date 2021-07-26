@@ -17,5 +17,5 @@ class Products(models.Model):
         ]
 
     def __str__(self):
-        return '%s' % self.product_name
+        return '%s' % self.name
    

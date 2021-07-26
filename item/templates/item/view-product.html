@@ -3,86 +3,83 @@
 
 
 {% block content %}
-    <div class="container-fluid">
-        <!-- Page Heading -->
-                   
+<div class="container-fluid">
+    <!-- Page Heading -->
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Products</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                      
-                                        <tr>
-                                            
-                                            <th>Name</th>
-                                            <th>SKU</th>
-                                            <th>Description</th>                                          
-                                            <th>Date</th>
-                                            <th>Update</th>
-                                            <th>Delete</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            
-                                            <th>Name</th>
-                                            <th>SKU</th>
-                                            <th>Description</th>
-                                            <th>Date</th>
-                                            <th>Update</th>
-                                            <th>Delete</th>
-                                            
-                                        </tr>
-                                        
-                                    </tfoot>
-                                    <tbody>
-                                        {% for product in products %} 
-                                        <tr>
-                                            
-                                            <td>{{product.name}}</td>
-                                            <td>{{product.sku}}</td>
-                                            <td>{{product.description}}</td>
-                                            <td>{{product.date_created}}</td>
-                                            <td>
-                                                <a  href="{% url 'update-product' product.pk %}">
-                                                  
-                                                    <button type="submit" class="btn btn-primary">update</button>
-                                                </a> 
-                                            </td> 
-                                            <td>
-                                                <form method="POST" action="{% url 'delete_product' product.pk %}">
-                                                    {%csrf_token%}
-                                                    <button type="submit" class="btn btn-danger">delete</button>
-                                                </form> 
-                                            </td> 
-                                           
-                                        </tr>
-                                        {%endfor product%}
-                                    </tbody>
-                                    <div>
-                                      
-                                        <p><a href="{% url 'register-product' %}" class="btn btn-primary">Add Product Manually</a></p>                           
-                                   
 
-                                    
-                                    
-                                        <p><a href="{% url 'upload-product' %}" class="btn btn-primary" align="left">Upload Product File</a></p>                           
-                                    
-                                    </div>
-                                </table>
-                                <div class="form-group" style="margin-top: 20px">
-                                           
-                                    <a href="{% url 'delete-all-product' %}" class="btn btn-danger" type="submit">Delete All</a>
-                                  </div>
-                            </div>
-                        </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Products</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+
+                        <tr>
+
+                            <th>Name</th>
+                            <th>SKU</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>SKU</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+
+                        </tr>
+
+                    </tfoot>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+
+                            <td>{{product.name}}</td>
+                            <td>{{product.sku}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.date_created}}</td>
+                            <td>
+                                <a href="{% url 'update-product' product.pk %}">
+
+                                    <button type="submit" class="btn btn-primary">update</button>
+                                </a>
+                            </td>
+                            <td>
+                                <form method="POST" action="{% url 'delete_product' product.pk %}">
+                                    {%csrf_token%}
+                                    <button type="submit" class="btn btn-danger">delete</button>
+                                </form>
+                            </td>
+
+                        </tr>
+                        {%endfor product%}
+                    </tbody>
+                    <div>
+
+                        <p><a href="{% url 'register-product' %}" class="btn btn-primary">Add Product Manually</a></p>
+                        <p><a href="{% url 'upload-product' %}" class="btn btn-primary" align="left">Upload Product
+                                File</a></p>
+
                     </div>
+                </table>
+                <div class="form-group" style="margin-top: 20px">
 
+                    <a href="{% url 'delete-all-product' %}" class="btn btn-danger" type="submit">Delete All</a>
+                </div>
+            </div>
+        </div>
     </div>
+
+</div>
 {% endblock content %}
