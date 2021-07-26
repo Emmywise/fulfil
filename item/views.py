@@ -30,11 +30,8 @@ def upload_product(request): #fucntion that fetch the datas from haflhour consum
         Products.objects.update_or_create(
             name=colum[0],
             sku=colum[1],
-            description=colum[2],
-          
+            description=colum[2],        
         )
-    
-
     return HttpResponseRedirect(reverse("view-product"))
 
 
